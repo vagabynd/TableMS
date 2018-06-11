@@ -10,27 +10,37 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate,UIPickerViewDataSource {
  
+    @IBOutlet weak var timeTable: UITableView!
     @IBOutlet weak var notOfStepper: UIStepper!
     @IBOutlet weak var ofStepper: UIStepper!
     @IBOutlet weak var notOfLable: UILabel!
     @IBOutlet weak var ofLable: UILabel!
-    @IBOutlet weak var timeTable: UITableView!
     @IBOutlet weak var dayOfWeek: UIPickerView!
     @IBOutlet weak var week: UISegmentedControl!
     var nowDayOfWeek = 0
     var nowWeek = 0
     var ofLeft = 0
     var notOfLeft = 0
-    let indentifire = "firstCell"
+    let indentifire = "cell"
     var array = ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"]
+    var dayUp: DayUp = DayUp()
+    var textLabelText = ""
+    let math: Pair = Pair(namePair: "Матем", numOfLab: 7)
+    let fiz: Pair = Pair(namePair: "Физика", numOfLab: 4)
+    let fizra: Pair = Pair(namePair: "Физ-ра", numOfLab: 2)
+    let proga: Pair = Pair(namePair: "Прога", numOfLab: 5)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         dayOfWeek.dataSource = self
         dayOfWeek.delegate = self
         
         week.addTarget(self, action: #selector(selectedValue), for: .valueChanged)
+        
         ofLeft = UserDefaults.standard.integer(forKey: "of")
         notOfLeft = UserDefaults.standard.integer(forKey: "notof")
+    
+        
         ofLable.text = "\(ofLeft)"
         notOfLable.text = "\(notOfLeft)"
         notOfStepper.value = Double(notOfLeft)
@@ -82,7 +92,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func createTable(){
-        timeTable.register(UITableViewCell.self, forCellReuseIdentifier: indentifire)
+        //timeTable.register(UITableViewCell.self, forCellReuseIdentifier: indentifire)
         timeTable.delegate = self
         timeTable.dataSource = self
         
@@ -105,193 +115,85 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: indentifire, for: indexPath)
         //cell.textLabel?.text = "section = \(indexPath.section) cell = \(indexPath.row)"
         if (nowDayOfWeek == 0 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 понедельник по верх"
-            case 1:
-                cell.textLabel?.text = "2 понедельник по верх"
-            case 2:
-                cell.textLabel?.text = "3 понедельник по верх"
-            case 3:
-                cell.textLabel?.text = "4 понедельник по верх"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "MondayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 0 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 понедельник по низ"
-            case 1:
-                cell.textLabel?.text = "2 понедельник по низ"
-            case 2:
-                cell.textLabel?.text = "3 понедельник по низ"
-            case 3:
-                cell.textLabel?.text = "4 понедельник по низ"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "MondayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 1 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 вторник по верх"
-            case 1:
-                cell.textLabel?.text = "2 вторник по верх"
-            case 2:
-                cell.textLabel?.text = "3 вторник по верх"
-            case 3:
-                cell.textLabel?.text = "4 вторник по верх"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "TuesdayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 1 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 вторник по низ"
-            case 1:
-                cell.textLabel?.text = "2 вторник по низ"
-            case 2:
-                cell.textLabel?.text = "3 вторник по низ"
-            case 3:
-                cell.textLabel?.text = "4 вторник по низ"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "TuesdayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 2 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 среда по верх"
-            case 1:
-                cell.textLabel?.text = "2 среда по верх"
-            case 2:
-                cell.textLabel?.text = "3 среда по верх"
-            case 3:
-                cell.textLabel?.text = "4 среда по верх"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "WednesdayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 2 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 среда по низ"
-            case 1:
-                cell.textLabel?.text = "2 среда по низ"
-            case 2:
-                cell.textLabel?.text = "3 среда по низ"
-            case 3:
-                cell.textLabel?.text = "4 среда по низ"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "WednesdayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 3 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 четверг по верх"
-            case 1:
-                cell.textLabel?.text = "2 четверг по верх"
-            case 2:
-                cell.textLabel?.text = "3 четверг по верх"
-            case 3:
-                cell.textLabel?.text = "4 четверг по верх"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "ThursdayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 3 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 четверг по низ"
-            case 1:
-                cell.textLabel?.text = "2 четверг по низ"
-            case 2:
-                cell.textLabel?.text = "3 четверг по низ"
-            case 3:
-                cell.textLabel?.text = "4 четверг по низ"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "ThursdayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 4 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 пятница по верх"
-            case 1:
-                cell.textLabel?.text = "2 пятница по верх"
-            case 2:
-                cell.textLabel?.text = "3 пятница по верх"
-            case 3:
-                cell.textLabel?.text = "4 пятница по верх"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "FridayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 4 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 пятница по низ"
-            case 1:
-                cell.textLabel?.text = "2 пятница по низ"
-            case 2:
-                cell.textLabel?.text = "3 пятница по низ"
-            case 3:
-                cell.textLabel?.text = "4 пятница по низ"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "FridayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 5 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 суббота по верх"
-            case 1:
-                cell.textLabel?.text = "2 суббота по верх"
-            case 2:
-                cell.textLabel?.text = "3 суббота по верх"
-            case 3:
-                cell.textLabel?.text = "4 суббота по верх"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "SaturdayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 5 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "1 суббота по низ"
-            case 1:
-                cell.textLabel?.text = "2 суббота по низ"
-            case 2:
-                cell.textLabel?.text = "3 суббота по низ"
-            case 3:
-                cell.textLabel?.text = "4 суббота по низ"
-            default:
-                print("err")
-            }
+            dayUp = DayUp(dayName: "SaturdayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 6 && nowWeek == 0){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "Отдохни, глупец"
-            default:
-                cell.textLabel?.text = "Отдохни, глупец"
-            }
+            dayUp = DayUp(dayName: "SundayU",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         if (nowDayOfWeek == 6 && nowWeek == 1){
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "Отдохни, глупец"
-            default:
-                cell.textLabel?.text = "Отдохни, глупец"
-            }
+            dayUp = DayUp(dayName: "SundayD",pair: [math,fizra,proga,fiz])
+            cell.textLabel?.text = "\(dayUp.getAllPair()[indexPath.row].getName())"
         }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 57.5
     }
-
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let currentCellValue = tableView.cellForRow(at: indexPath)! as UITableViewCell
+        textLabelText = currentCellValue.textLabel!.text!
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC: LabViewController = segue.destination as! LabViewController
+        switch textLabelText {
+        case "Матем":
+            destinationVC.mathPair = math
+        case "Физика":
+            destinationVC.mathPair = fiz
+        case "Физ-ра":
+            destinationVC.mathPair = fizra
+        case "Прога":
+            destinationVC.mathPair = proga
+        default:
+            print("err")
+        }
+        
+    }
+    
 }
