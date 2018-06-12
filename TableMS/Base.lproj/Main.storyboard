@@ -163,7 +163,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Лабораторные работы" id="6mj-sk-u0r"/>
+                    <navigationItem key="navigationItem" title="Лабораторные работы" id="6mj-sk-u0r">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="2Da-VX-cvl"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="labTable" destination="sHB-ai-GhL" id="YU5-3g-HFJ"/>
                     </connections>
